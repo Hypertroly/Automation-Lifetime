@@ -17,7 +17,7 @@ chrome_options = webdriver.chrome.options.Options()
 #chrome_options.add_argument("--headless")
 chrome_options.add_argument('--disable-gpu')
 # Starts driver
-driver = webdriver.Chrome("C:\chromedriver\chromedriver.exe",options=chrome_options)
+driver = webdriver.Chrome(r"C:\chromedriver\chromedriver.exe",options=chrome_options)
 # driver = webdriver.PhantomJS()
 # Gets page
 driver.get("https://extranet.btgpactual.com/")
@@ -32,6 +32,7 @@ driver.find_element_by_id("txtLogin").send_keys(login)
 driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 time.sleep(2)
 # Tries to bypass keyboard
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
 
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
@@ -62,6 +63,10 @@ time.sleep(1)
 #Xml Second Date //*[@id="txtFim"]
 
 driver.find_element_by_xpath("//*[@id='linkbtconsultar']/a").click()
+
+result_file = os.path.join(r"C:\Downloads","Results.xls")
+if os.path.exists(result_file):
+    os.remove(result_file)
 time.sleep(2)
 
 driver.find_element_by_xpath("//*[@id='tblAtivoCarteira_wrapper']/div[2]/div[3]/div/div[2]/a[1]").click()
@@ -70,20 +75,12 @@ time.sleep(3)
 driver.close()
 
 print("Arquivo baixado")
-#result_file = os.path.join("C:\Downloads","Result.xls")
 
-#if os.path.exists("Balandiario.xlsx"):
-#        os.remove("Balandiario.xlsx")
+result_file = os.path.join(r"C:\Downloads","Results.xls")
+new_file = os.path.join(r"C:\Downloads","Balandiario.xls")
 
-#os.rename(result_file, "Balandiario.xls")
-
-result_file = os.path.join("C:\Downloads","Results.xls")
-new_file = os.path.join("C:\Downloads","Balandiario.xls")
-
-if os.path.exists(new_file):
-    os.remove(new_file)
-if os.path.exists("C:\Downloads\Balandiario.xlsx"):
-    os.remove("C:\Downloads\Balandiario.xlsx")
+if os.path.exists(r"C:\Downloads\Balandiario.xls"):
+    os.remove(r"C:\Downloads\Balandiario.xls")
 
 os.rename(result_file, new_file)
 
@@ -91,7 +88,7 @@ print("Arquivo renomeado")
 
 #////////////////////////////////////////////////////////////////////////////////////////
 
-fname = "C:\Downloads\Balandiario.xls"
+fname = r"C:\Downloads\Balandiario.xls"
 excel = win32.Dispatch('Excel.Application')
 wb = excel.Workbooks.Open(fname)
 
@@ -104,7 +101,7 @@ print("Arquivo convertido para xlsx")
 #/////////////////////////////////////////////////////////////////////////////////////////
 
 try:
-    new = pd.read_excel('C:\Downloads\Balandiario.xlsx', 'Balandiario', index_col=None, na_values=['NA'], date_format="YYYY-MM-DD")
+    new = pd.read_excel(r'C:\Downloads\Balandiario.xlsx', 'Balandiario', index_col=None, na_values=['NA'], date_format="YYYY-MM-DD")
 
 except IOError:
     print("Excel novo não encontrado")
@@ -139,7 +136,7 @@ fer=last+2
 
 
 def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
-                       truncate_sheet=False, 
+                       truncate_sheet=False,
                        **to_excel_kwargs):
      # ignore [engine] parameter if it was passed
     if 'engine' in to_excel_kwargs:
@@ -147,7 +144,7 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
 
     writer = pd.ExcelWriter(filename, engine='openpyxl', date_format="YYYY-MM-DD", mode='a')
 
-    # Python 2.x: define [FileNotFoundError] exception if it doesn't exist 
+    # Python 2.x: define [FileNotFoundError] exception if it doesn't exist
     try:
         FileNotFoundError
     except NameError:
@@ -188,7 +185,4 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
     writer.save()
 
 
-append_df_to_excel("Lamina_Balanced.xlsx",new,sheet_name="Historico",startrow=fer,truncate_sheet=False,header=None)
-
-
-
+append_df_to_excel(r"\\192.168.1.5\lftm_asset\GESTAO\FUNDOS ABERTOS\LIFETIME BALANCED\Lâminas\Lamina_Balanced.xlsx",new,sheet_name="Historico",startrow=fer,truncate_sheet=False,header=None)

@@ -32,7 +32,16 @@ driver.find_element_by_id("txtLogin").send_keys(login)
 driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 time.sleep(2)
 # Tries to bypass keyboard
-
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[2]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[4]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[54]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[18]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[21]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[27]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[31]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[22]").click()
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
 time.sleep(2)
@@ -144,12 +153,6 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
         to_excel_kwargs.pop('engine')
 
     writer = pd.ExcelWriter(filename, engine='openpyxl', date_format="YYYY-MM-DD", mode='a')
-
-    # Python 2.x: define [FileNotFoundError] exception if it doesn't exist 
-    try:
-        FileNotFoundError
-    except NameError:
-        FileNotFoundError = IOError
 
 
     try:
