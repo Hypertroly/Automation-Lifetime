@@ -86,5 +86,5 @@ c = pd.concat(framesconc, sort=False)
 
 if os.path.exists("Conc.xlsx"):
     os.remove("Conc.xlsx")
-
+    
 c.to_excel("Conc.xlsx", sheet_name='Conc')

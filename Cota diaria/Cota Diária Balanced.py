@@ -88,6 +88,7 @@ print("Arquivo renomeado")
 
 #////////////////////////////////////////////////////////////////////////////////////////
 
+#Changing file format to xlsx
 fname = r"C:\Downloads\Balandiario.xls"
 excel = win32.Dispatch('Excel.Application')
 wb = excel.Workbooks.Open(fname)
@@ -100,6 +101,7 @@ print("Arquivo convertido para xlsx")
 
 #/////////////////////////////////////////////////////////////////////////////////////////
 
+#Opening and adjusting the dataframe and opening the main excel
 try:
     new = pd.read_excel(r'C:\Downloads\Balandiario.xlsx', 'Balandiario', index_col=None, na_values=['NA'], date_format="YYYY-MM-DD")
 
@@ -134,7 +136,7 @@ while a != 'y' and 'n':
 
 fer=last+2
 
-
+#Function to get a dataframe into a excel table
 def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
                        truncate_sheet=False,
                        **to_excel_kwargs):

@@ -33,15 +33,7 @@ driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 time.sleep(2)
 # Tries to bypass keyboard
 driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[2]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[4]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[54]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[18]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[21]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[27]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[31]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[22]").click()
+
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
 time.sleep(2)
@@ -98,6 +90,7 @@ print("Arquivo renomeado")
 
 #////////////////////////////////////////////////////////////////////////////////////////
 
+#Changing file format to xlsx
 fname = r"C:\Downloads\Graphdiario.xls"
 excel = win32.Dispatch('Excel.Application')
 wb = excel.Workbooks.Open(fname)
@@ -110,6 +103,7 @@ print("Arquivo convertido para xlsx")
 
 #/////////////////////////////////////////////////////////////////////////////////////////
 
+#Opening and adjusting the dataframe and opening the main excel
 try:
     new = pd.read_excel(r'C:\Downloads\Graphdiario.xlsx', 'Graphdiario', index_col=None, na_values=['NA'], date_format="YYYY-MM-DD")
 
@@ -144,7 +138,7 @@ while a != 'y' and 'n':
 
 fer=last+2
 
-
+#Function to get a dataframe into a excel table
 def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
                        truncate_sheet=False, 
                        **to_excel_kwargs):
