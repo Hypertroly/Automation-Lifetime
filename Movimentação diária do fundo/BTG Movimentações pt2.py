@@ -31,15 +31,7 @@ driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 sleep(2)
 # Tries to bypass keyboard
 driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[2]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[4]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[54]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[18]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[21]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[27]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[31]").click()
-driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[22]").click()
+
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
 sleep(2)
@@ -97,6 +89,30 @@ try:
     wb.Close()                               #FileFormat = 56 is for .xls extension
     excel.Application.Quit()
 
-    print("Arquivo convertido para xlsx")
+    print("Arquivo convertido para xls")
 except AttributeError:
     print("Feche o processo EXCEL no gerenciador de tarefas e execute o programa novamente")
+
+outlook = win32.Dispatch('Outlook.Application')
+
+sendfromAC=None
+for oacc in outlook.Session.Accounts:
+#    if oacc.SmtpAddress == "Movimentacoes Fundos - XP Investimentos <movimentacoes.fundos@xpi.com.br>":
+    if oacc.SmtpAddress == 'Kevin Freundt <kevin.freundt@LIFETIMEASSET.COM.BR>':
+        sendfromAC = oacc
+        break
+
+mail = outlook.CreateItem(0)
+
+if sendfromAC:
+    mail._oleobj_.Invoke(*(64209, 0, 8, 0, sendfromAC))
+#mail.To = 'Movimentacoes Fundos - XP Investimentos <movimentacoes.fundos@xpi.com.br>'
+mail.To = 'Kevin Freundt <kevin.freundt@LIFETIMEASSET.COM.BR>'
+#mail.Cc = 'Operations <operations@LIFETIMEASSET.COM.BR>'
+mail.Subject = 'Lifetime Asset - Conciliação de Movimentações'
+mail.Attachments.Add(r"C:\Downloads\Results.xls")
+
+mail.HTMLBody = mail.HTMLBody + "<BR>XP,<b> </b>" \
+                + "<BR><BR> Segue a planilha com as movimentações do dia. </b> "\
+                + "<BR><BR> Att, </b>"
+mail.Send()
