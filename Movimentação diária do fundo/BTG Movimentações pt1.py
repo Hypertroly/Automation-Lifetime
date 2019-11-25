@@ -35,7 +35,15 @@ driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 sleep(2)
 # Tries to bypass keyboard
 driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[2]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[4]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[54]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[18]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[21]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[27]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[31]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[22]").click()
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
 sleep(2)

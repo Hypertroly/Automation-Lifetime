@@ -33,7 +33,15 @@ driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 time.sleep(2)
 # Tries to bypass keyboard
 driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[2]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[4]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[54]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[18]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[21]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[27]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[31]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[22]").click()
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
 time.sleep(2)
@@ -90,7 +98,6 @@ print("Arquivo renomeado")
 
 #////////////////////////////////////////////////////////////////////////////////////////
 
-#Changing file format to xlsx
 fname = r"C:\Downloads\Graphdiario.xls"
 excel = win32.Dispatch('Excel.Application')
 wb = excel.Workbooks.Open(fname)
@@ -103,26 +110,11 @@ print("Arquivo convertido para xlsx")
 
 #/////////////////////////////////////////////////////////////////////////////////////////
 
-#Opening and adjusting the dataframe and opening the main excel
 try:
     new = pd.read_excel(r'C:\Downloads\Graphdiario.xlsx', 'Graphdiario', index_col=None, na_values=['NA'], date_format="YYYY-MM-DD")
 
 except IOError:
     print("Excel novo não encontrado")
-
-try:
-    fund = pd.read_excel("Lamina_Graphene.xlsx", 'Historico', index_col=None, na_values=['NA'])
-
-    #"Lamina_Graphene.xlsx"'
-except IOError:
-    print("Excel lâmina não encontrado")
-
-new['Data de referência'] = new["Data de referência"].dt.strftime('%d/%m/%Y')
-new['Data de referência'] = pd.to_datetime(new["Data de referência"])
-
-last = fund.tail(1).index.values.astype(int)[0]
-
-print(last)
 
 print("Essas são as informações que serão passadas para a lâmina")
 print(new)
@@ -135,17 +127,9 @@ while a != 'y' and 'n':
     if a=='n':
         sys.exit()
 
-
-fer=last+2
-
-#Function to get a dataframe into a excel table
-def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
+def append_df_to_excel(filename, df, sheet_name='Historico', startrow=None,
                        truncate_sheet=False, 
                        **to_excel_kwargs):
-     # ignore [engine] parameter if it was passed
-    if 'engine' in to_excel_kwargs:
-        to_excel_kwargs.pop('engine')
-
     writer = pd.ExcelWriter(filename, engine='openpyxl', date_format="YYYY-MM-DD", mode='a')
 
 
@@ -183,7 +167,7 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
     writer.save()
 
 
-append_df_to_excel("Lamina_Graphene.xlsx",new,sheet_name="Historico",startrow=fer,truncate_sheet=False,header=None)
+append_df_to_excel(r"\\192.168.1.5\lftm_asset\GESTAO\FUNDOS ABERTOS\LIFETIME GRAPHENE\Lâmina\Lamina_Graphene para acompanhamento\Acompanhamento_Graphene.xlsx",new,truncate_sheet=False,header=None)
 
 
 

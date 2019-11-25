@@ -33,7 +33,15 @@ driver.find_element_by_xpath("//*[@id='btnValidarLogin']").click()
 time.sleep(2)
 # Tries to bypass keyboard
 driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
-
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[2]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[11]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[4]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[54]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[18]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[21]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[27]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[31]").click()
+driver.find_element_by_xpath("//*[@id='contentVirtualKeyboard']/div/div/div[22]").click()
 #validates
 driver.find_element_by_xpath("//*[@id='btnValidate']/span").click()
 time.sleep(2)
@@ -65,8 +73,8 @@ time.sleep(1)
 driver.find_element_by_xpath("//*[@id='linkbtconsultar']/a").click()
 
 result_file = os.path.join(r"C:\Downloads","Results.xls")
-if os.path.exists(result_file):
-    os.remove(result_file)
+if os.path.exists(r"C:\Downloads\Results.xls"):
+    os.remove(r"C:\Downloads\Results.xls")
 time.sleep(2)
 
 driver.find_element_by_xpath("//*[@id='tblAtivoCarteira_wrapper']/div[2]/div[3]/div/div[2]/a[1]").click()
@@ -88,10 +96,11 @@ print("Arquivo renomeado")
 
 #////////////////////////////////////////////////////////////////////////////////////////
 
-#Changing file format to xlsx
 fname = r"C:\Downloads\Balandiario.xls"
 excel = win32.Dispatch('Excel.Application')
 wb = excel.Workbooks.Open(fname)
+if os.path.exists(r"C:\Downloads\Balandiario.xlsx"):
+    os.remove(r"C:\Downloads\Balandiario.xlsx")
 
 wb.SaveAs(fname+"x", FileFormat = 51)    #FileFormat = 51 is for .xlsx extension
 wb.Close()                               #FileFormat = 56 is for .xls extension
@@ -101,26 +110,11 @@ print("Arquivo convertido para xlsx")
 
 #/////////////////////////////////////////////////////////////////////////////////////////
 
-#Opening and adjusting the dataframe and opening the main excel
 try:
     new = pd.read_excel(r'C:\Downloads\Balandiario.xlsx', 'Balandiario', index_col=None, na_values=['NA'], date_format="YYYY-MM-DD")
 
 except IOError:
     print("Excel novo não encontrado")
-
-try:
-    fund = pd.read_excel(r'\\192.168.1.5\lftm_asset\GESTAO\FUNDOS ABERTOS\LIFETIME BALANCED\Lâminas\Lamina_Balanced.xlsx', 'Historico', index_col=None, na_values=['NA'])
-
-    #r'\\192.168.1.5\lftm_asset\GESTAO\FUNDOS ABERTOS\LIFETIME BALANCED\Lâminas\Lamina_Balanced.xlsx'
-except IOError:
-    print("Excel lâmina não encontrado")
-
-new['Data de referência'] = new["Data de referência"].dt.strftime('%d/%m/%Y')
-new['Data de referência'] = pd.to_datetime(new["Data de referência"])
-
-last = fund.tail(1).index.values.astype(int)[0]
-
-print(last)
 
 print("Essas são as informações que serão passadas para a lâmina")
 print(new)
@@ -133,11 +127,7 @@ while a != 'y' and 'n':
     if a=='n':
         sys.exit()
 
-
-fer=last+2
-
-#Function to get a dataframe into a excel table
-def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
+def append_df_to_excel(filename, df, sheet_name='Historico', startrow=None,
                        truncate_sheet=False,
                        **to_excel_kwargs):
      # ignore [engine] parameter if it was passed
@@ -145,12 +135,6 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
         to_excel_kwargs.pop('engine')
 
     writer = pd.ExcelWriter(filename, engine='openpyxl', date_format="YYYY-MM-DD", mode='a')
-
-    # Python 2.x: define [FileNotFoundError] exception if it doesn't exist
-    try:
-        FileNotFoundError
-    except NameError:
-        FileNotFoundError = IOError
 
 
     try:
@@ -187,4 +171,4 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
     writer.save()
 
 
-append_df_to_excel(r"\\192.168.1.5\lftm_asset\GESTAO\FUNDOS ABERTOS\LIFETIME BALANCED\Lâminas\Lamina_Balanced.xlsx",new,sheet_name="Historico",startrow=fer,truncate_sheet=False,header=None)
+append_df_to_excel(r"\\192.168.1.5\lftm_asset\GESTAO\FUNDOS ABERTOS\LIFETIME BALANCED\Lâminas\Lamina_Balanced para acompanhamento\Acompanhamento_Balanced.xlsx",new,truncate_sheet=False, header=None)
